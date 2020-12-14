@@ -17,14 +17,14 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/api/getMessage', (req, res) => {
+app.get('/getMessage', (req, res) => {
     const sqlSelect = "SELECT * FROM message_logs";
     db.query(sqlSelect, (err, result) => {
         res.send(result);
     });
 });
 
-app.post('/api/insertMessage', (req, res) => {
+app.post('/insertMessage', (req, res) => {
     const alias = req.body.alias;
     const message = req.body.message;
 
@@ -34,7 +34,7 @@ app.post('/api/insertMessage', (req, res) => {
     });
 });
 
-app.post('/api/insertUser', (req, res) => {
+app.post('/insertUser', (req, res) => {
     const alias = req.body.alias;
     const password = req.body.password;
 
@@ -44,7 +44,7 @@ app.post('/api/insertUser', (req, res) => {
     });
 });
 
-app.get('/api/isUserAuth', (req, res) => {
+app.get('/isUserAuth', (req, res) => {
     const alias = req.query.alias;
     const inputPassword = req.query.password;
 
@@ -63,7 +63,7 @@ app.get('/api/isUserAuth', (req, res) => {
     });
 });
 
-app.get('/api/isAliasUnique', (req, res) => {
+app.get('/isAliasUnique', (req, res) => {
     const alias = req.query.alias;
 
     const sqlSelect = "SELECT alias FROM user WHERE alias = ?";
@@ -76,7 +76,7 @@ app.get('/api/isAliasUnique', (req, res) => {
     })
 });
 
-app.get('/api/startSession', (req, res) => {
+app.get('/startSession', (req, res) => {
     const alias = req.query.alias;
 
     const sqlInsert = "INSERT INTO session (alias) VALUES (?); SELECT LAST_INSERT_ID() AS session_id";
@@ -85,7 +85,7 @@ app.get('/api/startSession', (req, res) => {
     });
 });
 
-app.delete('/api/endSession', (req, res) => {
+app.delete('/endSession', (req, res) => {
     const sessionId = req.body.sessionId;
     const sqlDelete = "DELETE FROM session WHERE session_id = ?"
     db.query(sqlDelete, sessionId, (err, result) => {
@@ -93,7 +93,7 @@ app.delete('/api/endSession', (req, res) => {
     });
 });
 
-app.get('/api/getUserCount', (req, res) => {
+app.get('/getUserCount', (req, res) => {
     const sqlSelect = "SELECT COUNT(session_id) AS user_count FROM session";
     db.query(sqlSelect, [], (err, result) => {
         res.send(result);

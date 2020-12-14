@@ -51,13 +51,13 @@ function Chat(props) {
       }, [cleanup]);
 
     const getUserCount = () => {
-        Axios.get('http://localhost:3001/api/getUserCount').then((response) => {
+        Axios.get('http://onlypeters.com/api/getUserCount').then((response) => {
             setUserCount(response.data[0].user_count);
         });
     };
 
     const startSession = () => {
-        Axios.get('http://localhost:3001/api/startSession',{
+        Axios.get('http://onlypeters.com/api/startSession',{
             params: {
                 alias: tempAlias
             }
@@ -67,7 +67,7 @@ function Chat(props) {
     };
 
     const endSession = () => {
-        Axios.delete('http://localhost:3001/api/endSession',{
+        Axios.delete('http://onlypeters.com/api/endSession',{
             data: {
                 sessionId: sessionId
             }
@@ -76,14 +76,14 @@ function Chat(props) {
     };
 
     const getMessageLog = () => {
-        Axios.get("http://localhost:3001/api/getMessage").then((response) => {
+        Axios.get("http://onlypeters.com/api/getMessage").then((response) => {
             setMessageLog(response.data);
         });
     };
 
     const sendMessage = (e) => {
         e.preventDefault();
-        Axios.post('http://localhost:3001/api/insertMessage', {
+        Axios.post('http://onlypeters.com/api/insertMessage', {
             alias: alias, 
             message: message
         });
@@ -92,7 +92,7 @@ function Chat(props) {
 
     const createUser = (e) => {
         e.preventDefault();
-        Axios.get("http://localhost:3001/api/isAliasUnique", {
+        Axios.get("http://onlypeters.com/api/isAliasUnique", {
             params: {
                 alias: tempAlias
             }
@@ -102,7 +102,7 @@ function Chat(props) {
                     setAlias(tempAlias);
                     setIsLogin(true);
                     startSession();
-                    Axios.post("http://localhost:3001/api/insertUser", {
+                    Axios.post("http://onlypeters.com/api/insertUser", {
                         alias: tempAlias,
                         password: password
                     });
@@ -119,7 +119,7 @@ function Chat(props) {
 
     const userLogin = (e) => {
         e.preventDefault();
-        Axios.get("http://localhost:3001/api/isUserAuth", {
+        Axios.get("http://onlypeters.com/api/isUserAuth", {
             params: {
                 alias: tempAlias,
                 password: password
